@@ -7,10 +7,15 @@ struct STreeNode
 {
     ElementType *Data;
     int MaxSize;
+    int pos;
 };
 
-SBinTree CreateSBinTree();
+SBinTree CreateSBinTree(int Maxsize);
 bool IsEmpty(SBinTree BT);
 void TraversalST(SBinTree BT);
+
+int Findleft(int i,SBinTree BT);//寻找左子节点
+int Findright(int i,SBinTree BT);//寻找右子节点
+int Findfather(int i,SBinTree BT);//寻找父节点
 
 #endif // SBINTREE_H_INCLUDED

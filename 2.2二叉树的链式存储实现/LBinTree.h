@@ -16,4 +16,9 @@ LBinTree CreateLBinTree();
 bool IsEmpty(LBinTree Bt);
 void TraversalST(LBinTree BT);
 
+//last指向的节点只能是叶节点
+enum LorR {right,left};
+void AddNode(Position last,LorR lr,ElementType item);
+void DeleteNode(Position last,LorR lr,ElementType item);
+
 #endif // LBINTREE_H_INCLUDED
