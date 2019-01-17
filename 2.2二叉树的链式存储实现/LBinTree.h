@@ -18,7 +18,7 @@ void TraversalST(LBinTree BT);
 
 //last指向的节点只能是叶节点
 enum LorR {right,left};
-void AddNode(Position last,LorR lr,ElementType item);
-void DeleteNode(Position last,LorR lr,ElementType item);
+void AddNode(Position last,enum LorR lr,ElementType item);
+ElementType DeleteNode(Position last,enum LorR lr);
 
 #endif // LBINTREE_H_INCLUDED
