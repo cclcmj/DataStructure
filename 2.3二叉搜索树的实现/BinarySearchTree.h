@@ -5,7 +5,7 @@
 
 typedef struct BSTreeNode *BSTree;
 typedef BSTree Position;
-struct BSTree
+struct BSTreeNode
 {
     ElementType Data;
     BSTree left;
