@@ -1,6 +1,7 @@
 #include <DataStructure.h>
 #include <BinarySearchTree.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 BSTree Insert(ElementType X,BSTree BST)
 {
@@ -10,9 +11,9 @@ BSTree Insert(ElementType X,BSTree BST)
         BST->left=BST->right=NULL;
     }else{
         if(X>BST->Data)
-            Insert(X,BST->right);
-        else if(X<BST->Data);
-            Insert(X,BST->left);
+            BST->right=Insert(X,BST->right);
+        else if(X<BST->Data)
+            BST->left=Insert(X,BST->left);
     }
     return BST;
 }
@@ -22,9 +23,9 @@ BSTree Delete(ElementType X,BSTree BST)
         printf("要找的元素不存在\n");
         return BST;
     }else if(X>BST->Data)
-        Delete(X,BST->right);
+        BST->right=Delete(X,BST->right);
     else if(X<BST->Data)
-        Delete(X,BST->left);
+        BST->left=Delete(X,BST->left);
     else{
         if(BST->left&&BST->right){
             BST->Data=FindMin(BST->right)->Data;
@@ -33,7 +34,7 @@ BSTree Delete(ElementType X,BSTree BST)
             BSTree tmp=BST;
             if(!BST->left)
                 BST=BST->right;
-            if(!BST->right)
+            else
                 BST=BST->left;
             free(tmp);
         }
