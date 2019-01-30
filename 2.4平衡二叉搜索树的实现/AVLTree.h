@@ -15,10 +15,11 @@ struct AVLTNode
 };
 
 int Max(int a,int b);
-AVLTree singleftRotation(AVLTree A);
-AVLTree sintrightRotation(AVLTree A);
-AVLTree doubleLeftRightRotation(AVLTree A);
-AVLTree doubleRightLeftRotation(AVLTree A);
+int GetHeight(Position A);
+AVLTree singleftRotation(Position A);
+AVLTree singrightRotation(Position A);
+AVLTree doubleLeftRightRotation(Position A);
+AVLTree doubleRightLeftRotation(Position A);
 
 AVLTree Insert(AVLTree T,ElementType X);
 AVLTree Delete(AVLTree T,ElementType X);
