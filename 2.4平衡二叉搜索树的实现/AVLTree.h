@@ -15,7 +15,8 @@ struct AVLTNode
 };
 
 int Max(int a,int b);
-int GetHeight(Position A);
+int GetBalance(Position A);
+
 AVLTree singleftRotation(Position A);
 AVLTree singrightRotation(Position A);
 AVLTree doubleLeftRightRotation(Position A);
@@ -23,6 +24,7 @@ AVLTree doubleRightLeftRotation(Position A);
 
 AVLTree Insert(AVLTree T,ElementType X);
 AVLTree Delete(AVLTree T,ElementType X);
+AVLTree FindMin(AVLTree T);
 
 
 #endif // AVLTREE_H_INCLUDED

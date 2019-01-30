@@ -7,9 +7,19 @@ int Max(int a,int b)
 {
     return a>b?a:b;
 }
-int GetHeight(Position A)
+int GetBalance(Position A)
 {
-    return A->Height;
+    return (A->left->Height-A->right->Height);
+}
+AVLTree FindMin(AVLTree T)
+{
+    if(!T){
+        printf("树空\n");
+        return NULL;
+    }else if(!T->left)
+        return T;
+    else
+        return FindMin(T->left);
 }
 AVLTree singleftRotation(Position A)
 {
@@ -49,7 +59,7 @@ AVLTree Insert(AVLTree T,ElementType X)
     }
     else if(X<T->Data){
         T->left=Insert(T->left,X);
-        if(GetHeight(T->left)-GetHeight(T->right)==2)
+        if(GetBalance(T)==2)
             if(X<T->left->Data)
                 T=singleftRotation(T);
             else
@@ -57,7 +67,7 @@ AVLTree Insert(AVLTree T,ElementType X)
     }
     else if(X>T->Data){
         T->right=Insert(T->right,X);
-        if(GetHeight(T->right)-GetHeight(T->left)==2)
+        if(GetBalance(T)==-2)
             if(X>T->right->Data)
                 T=singrightRotation(T);
             else
@@ -66,17 +76,43 @@ AVLTree Insert(AVLTree T,ElementType X)
     T->Height=Max(GetHeight(T->left),GetHeight(T->right))+1;
     return T;
 }
-/*
+
 AVLTree Delete(AVLTree T,ElementType X)
 {
-    if(!T)
-        printf("要删除的元素不存在\n");
+    if(!T){
+        printf("树为空\n");
+        return NULL;
+    }
     else if(X<T->Data){
-        T->left=Delete(T->left,X);
-        if(X<T->left->Data)
-            T=singleftRotation(T);
-        else
-
+        T-left=Delete(T->left,X);
+        if(GetBalance(T)==-2)
+            if(GetBalance(T->right)==-1)
+                T=singrightRotation(T);
+            else if(GetBalance(T->right)==1)
+                T=doubleRightLeftRotation(T);
+    }
+    else if(X>T-<Data){
+        T->right=Delete(T->right,X);
+        if(GetBalance(T)==2)
+            if(GetBalance(T->left)==1)
+                T=singleftRotation(T);
+            else if(GetBalance(T->left)==-1)
+                T=doubleLeftRightRotation(T);
+    }
+    else{
+        if(T->left&&T->right){
+            T->Data=FindMin(T->right);
+            T->right=Delete(T->right,T->Data);
+        }else{
+            Position pos=T;
+            if(!T->left)
+                T=T->right;
+            else if(!T->right)
+                T=T->left;
+            free(pos);
+        }
+        T->Height=Max(GetHeight(T->left),GetHeight(T->right))+1;
+        return T;
     }
 }
-*/
+
