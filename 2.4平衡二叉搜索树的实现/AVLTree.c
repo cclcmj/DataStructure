@@ -7,9 +7,29 @@ int Max(int a,int b)
 {
     return a>b?a:b;
 }
+int MaxHeight(Position A,Position B)
+{
+    if(A&&B)
+        return Max(A->Height,B->Height);
+    else if(A&&!B)
+        return A->Height;
+    else if(!A&&B)
+        return B->Height;
+    else{
+        //printf("AB都为空\n");
+        return 0;
+    }
+}
 int GetBalance(Position A)
 {
-    return (A->left->Height-A->right->Height);
+    if(A->left&&A->right)
+        return (A->left->Height-A->right->Height);
+    if(A->left&&!A->right)
+        return (A->left->Height-0);
+    if(!A->left&&A->right)
+        return (0-A->right->Height);
+    if(!A->left&&!A->right)
+        return 0;
 }
 AVLTree FindMin(AVLTree T)
 {
@@ -26,8 +46,8 @@ AVLTree singleftRotation(Position A)
     Position B=A->left;
     A->left=B->right;
     B->right=A;
-    A->Height=MAX(GetHeight(A->right),GetHeight(A->left))+1;
-    B->Height=MAX(GetHeight(B->left),GetHeight(A))+1;
+    A->Height=MaxHeight(A->right,A->left)+1;
+    B->Height=MaxHeight(B->left,A)+1;
     return B;
 }
 AVLTree singrightRotation(Position A)
@@ -35,8 +55,8 @@ AVLTree singrightRotation(Position A)
     Position B=A->right;
     A->right=B->left;
     B->left=A;
-    A->Height=MAX(GetHeight(A->right),GetHeight(A->left))+1;
-    B->Height=Max(GetHeight(B->right),GetHeight((B->left))+1;
+    A->Height=MaxHeight(A->right,A->left)+1;
+    B->Height=MaxHeight(B->right,B->left)+1;
     return B;
 }
 AVLTree doubleLeftRightRotation(Position A)
@@ -46,7 +66,7 @@ AVLTree doubleLeftRightRotation(Position A)
 }
 AVLTree doubleRightLeftRotation(Position A)
 {
-    A->right=singleftRotation(Position A->right);
+    A->right=singleftRotation(A->right);
     return singrightRotation(A);
 }
 AVLTree Insert(AVLTree T,ElementType X)
@@ -71,9 +91,9 @@ AVLTree Insert(AVLTree T,ElementType X)
             if(X>T->right->Data)
                 T=singrightRotation(T);
             else
-                T=doubleRightLeftRotation(T):
+                T=doubleRightLeftRotation(T);
     }
-    T->Height=Max(GetHeight(T->left),GetHeight(T->right))+1;
+    T->Height=MaxHeight(T->left,T->right)+1;
     return T;
 }
 
@@ -84,14 +104,14 @@ AVLTree Delete(AVLTree T,ElementType X)
         return NULL;
     }
     else if(X<T->Data){
-        T-left=Delete(T->left,X);
+        T->left=Delete(T->left,X);
         if(GetBalance(T)==-2)
             if(GetBalance(T->right)==-1)
                 T=singrightRotation(T);
             else if(GetBalance(T->right)==1)
                 T=doubleRightLeftRotation(T);
     }
-    else if(X>T-<Data){
+    else if(X>T->Data){
         T->right=Delete(T->right,X);
         if(GetBalance(T)==2)
             if(GetBalance(T->left)==1)
@@ -111,7 +131,7 @@ AVLTree Delete(AVLTree T,ElementType X)
                 T=T->left;
             free(pos);
         }
-        T->Height=Max(GetHeight(T->left),GetHeight(T->right))+1;
+        T->Height=MaxHeight(T->left,T->right)+1;
         return T;
     }
 }

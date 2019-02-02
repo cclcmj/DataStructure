@@ -16,6 +16,7 @@ struct AVLTNode
 
 int Max(int a,int b);
 int GetBalance(Position A);
+int MaxHeight(Position A,Position B);
 
 AVLTree singleftRotation(Position A);
 AVLTree singrightRotation(Position A);
