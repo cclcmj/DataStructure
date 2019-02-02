@@ -16,7 +16,7 @@ int MaxHeight(Position A,Position B)
     else if(!A&&B)
         return B->Height;
     else{
-        //printf("AB都为空\n");
+        printf("AB都为空\n");
         return 0;
     }
 }
@@ -24,11 +24,11 @@ int GetBalance(Position A)
 {
     if(A->left&&A->right)
         return (A->left->Height-A->right->Height);
-    if(A->left&&!A->right)
+    else if(A->left&&!A->right)
         return (A->left->Height-0);
-    if(!A->left&&A->right)
+    else if(!A->left&&A->right)
         return (0-A->right->Height);
-    if(!A->left&&!A->right)
+    else if(!A->left&&!A->right)
         return 0;
 }
 AVLTree FindMin(AVLTree T)
@@ -84,6 +84,8 @@ AVLTree Insert(AVLTree T,ElementType X)
                 T=singleftRotation(T);
             else
                 T=doubleLeftRightRotation(T);
+        else
+            printf("元素添加过程中%d没有旋转\n",T->Data);
     }
     else if(X>T->Data){
         T->right=Insert(T->right,X);
@@ -92,6 +94,8 @@ AVLTree Insert(AVLTree T,ElementType X)
                 T=singrightRotation(T);
             else
                 T=doubleRightLeftRotation(T);
+        else
+            printf("元素添加过程中%d没有旋转\n",T->Data);
     }
     T->Height=MaxHeight(T->left,T->right)+1;
     return T;
@@ -105,23 +109,27 @@ AVLTree Delete(AVLTree T,ElementType X)
     }
     else if(X<T->Data){
         T->left=Delete(T->left,X);
-        if(GetBalance(T)==-2)
+        if(GetBalance(T)==-2){
             if(GetBalance(T->right)==-1)
                 T=singrightRotation(T);
             else if(GetBalance(T->right)==1)
                 T=doubleRightLeftRotation(T);
+        }else
+            printf("元素添加过程中%d没有旋转\n",T->Data);
     }
     else if(X>T->Data){
         T->right=Delete(T->right,X);
-        if(GetBalance(T)==2)
+        if(GetBalance(T)==2){
             if(GetBalance(T->left)==1)
                 T=singleftRotation(T);
             else if(GetBalance(T->left)==-1)
                 T=doubleLeftRightRotation(T);
+        }else
+            printf("元素添加过程中%d没有旋转\n",T->Data);
     }
     else{
         if(T->left&&T->right){
-            T->Data=FindMin(T->right);
+            T->Data=FindMin(T->right)->Data;
             T->right=Delete(T->right,T->Data);
         }else{
             Position pos=T;
@@ -131,8 +139,10 @@ AVLTree Delete(AVLTree T,ElementType X)
                 T=T->left;
             free(pos);
         }
-        T->Height=MaxHeight(T->left,T->right)+1;
-        return T;
     }
+    if(T)
+        T->Height=MaxHeight(T->left,T->right)+1;
+    return T;
+
 }
 
